@@ -11,9 +11,8 @@ This project demonstrates how to integrate a locally hosted LLM into a Flask web
 
 ## 📸 Application Preview
 
-<p align="center">
-  <img src="screenshots/homepage.png" alt="Local AI Assistant UI" width="900">
-</p>
+<img width="958" height="671" alt="image" src="https://github.com/user-attachments/assets/34d12a57-c22d-4fc0-a3e8-370316f11abe" />
+
 
 ---
 
