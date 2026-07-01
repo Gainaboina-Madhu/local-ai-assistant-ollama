@@ -199,7 +199,7 @@ If you found this project helpful, consider giving it a ⭐ on GitHub!
 
 # 👨‍💻 Author
 
-**Your Name**
+Name: Gainaboina Madhu
 
 GitHub: https://github.com/yourusername
 
