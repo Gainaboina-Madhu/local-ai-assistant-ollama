@@ -178,6 +178,13 @@ This project demonstrates practical experience with:
 
 ---
 
+## Project Live (render deployed)  🎉
+
+ - Available at your primary URL https://local-ai-assistant-ollama.onrender.com
+
+---
+
+
 ## 🚀 Future Improvements
 
 - 💬 Chat History
