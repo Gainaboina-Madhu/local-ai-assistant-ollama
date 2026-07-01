@@ -77,7 +77,7 @@ This project is ideal for developers learning:
 ### Clone Repository
 
 ```bash
-git clone https://github.com/yourusername/local-ai-assistant-ollama.git
+git clone https://github.com/Gainaboina-Madhu/local-ai-assistant-ollama.git
 cd local-ai-assistant-ollama
 ```
 
