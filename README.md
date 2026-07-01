@@ -141,7 +141,6 @@ local-ai-assistant-ollama/
 ├── app.py
 ├── requirements.txt
 ├── README.md
-├── .gitignore
 │
 ├── templates/
 │     └── index.html
@@ -194,6 +193,17 @@ This project demonstrates practical experience with:
 ## ⭐ Support
 
 If you found this project helpful, consider giving it a ⭐ on GitHub!
+
+---
+
+
+# 👨‍💻 Author
+
+**Your Name**
+
+GitHub: https://github.com/yourusername
+
+LinkedIn: https://linkedin.com/in/yourprofile
 
 ---
 
