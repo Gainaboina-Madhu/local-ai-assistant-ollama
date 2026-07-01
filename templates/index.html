@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Local AI Assistant — Ollama (gemma3:1b)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --bg: #0a0a0a;
+    --surface: #141414;
+    --border: #262222;
+    --text: #ece6e6;
+    --muted: #9a8a8a;
+    --local: #3B82F6;   /* Ollama / local model — blue accent */
+}
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+        min-height: 100vh;
+        background: var(--bg);
+        background-image:
+            radial-gradient(circle at 15% 10%, rgba(245,166,35,0.10), transparent 40%),
+            radial-gradient(circle at 85% 90%, rgba(245,166,35,0.06), transparent 40%);
+        color: var(--text);
+        font-family: 'Inter', sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 24px;
+    }
+
+    .container {
+        width: 100%;
+        max-width: 640px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 36px;
+    }
+
+    .eyebrow {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        color: var(--muted);
+        text-transform: uppercase;
+        margin-bottom: 14px;
+    }
+
+    h1 {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 26px;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    p.subtitle {
+        color: var(--muted);
+        font-size: 14px;
+        margin-bottom: 22px;
+    }
+
+    /* Model badges: the signature element — shows the hybrid routing */
+    .models {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 28px;
+    }
+
+    .model {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 14px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 12px;
+    }
+
+    .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        flex-shrink: 0;
+    }
+
+    .dot.local { background: var(--local); box-shadow: 0 0 8px var(--local); }
+
+    .model span.label { color: var(--muted); }
+    .model span.name { color: var(--text); margin-left: auto; }
+
+    form { display: flex; flex-direction: column; gap: 12px; }
+
+    input[type="text"] {
+        width: 100%;
+        padding: 14px 16px;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--bg);
+        color: var(--text);
+        font-size: 15px;
+        outline: none;
+        transition: border-color 0.2s;
+    }
+
+    input[type="text"]::placeholder { color: var(--muted); }
+    input[type="text"]:focus { border-color: var(--local); }
+
+    button {
+        padding: 13px;
+        border: none;
+        border-radius: 8px;
+        background: var(--local);
+        color: #fff;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: opacity 0.2s, transform 0.2s;
+    }
+
+    button:hover { transform: translateY(-1px); }
+    button:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    .response-box {
+        margin-top: 24px;
+        padding: 18px;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-left: 3px solid var(--local);
+        border-radius: 8px;
+        animation: fadeIn 0.4s ease-in-out;
+    }
+
+    .response-box h3 {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 10px;
+    }
+
+    .response-text {
+        color: var(--text);
+        line-height: 1.7;
+        white-space: pre-wrap;
+        font-size: 14.5px;
+    }
+
+    footer {
+        margin-top: 28px;
+        text-align: center;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 11px;
+        color: var(--muted);
+    }
+
+    footer a { color: var(--local); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(6px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 480px) {
+        .container { padding: 24px; }
+        .models { flex-direction: column; }
+    }
+</style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="eyebrow">Local Inference</div>
+        <h1>AI Assistant</h1>
+
+
+        <div class="models">
+            <div class="model">
+                <span class="dot local"></span>
+                <span class="label">Ollama Model</span>
+                <span class="name">gemma3:1b</span>
+            </div>
+        </div>
+
+        <form method="POST" onsubmit="document.getElementById('askBtn').innerText='Thinking…'; document.getElementById('askBtn').disabled=true;">
+            <input type="text" name="question" placeholder="Ask something…" required>
+            <button id="askBtn" type="submit">Ask AI</button>
+        </form>
+
+        {% if response %}
+        <div class="response-box">
+            <h3>Response</h3>
+            <div class="response-text">{{ response }}</div>
+        </div>
+        {% endif %}
+
+        <footer>Built with Flask • LangChain • Ollama • Gemma 3 · <a href="#">GitHub</a></footer>
+    </div>
+
+</body>
+</html>
